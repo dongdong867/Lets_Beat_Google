@@ -16,7 +16,7 @@ FrontEnd:
 Backend:
 * Java
 * Spring Boot
-* javasoup
+* jsoup
 <br>
 ***
 
