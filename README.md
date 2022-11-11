@@ -22,7 +22,7 @@ Backend:
 
 ## **Development Sever** ##
 **Run Springboot_Project at first.**<br>
-Then start the development sever on http://localhost:3000.
+Then start the development sever by.
 ```
 npm run dev
 ```
@@ -45,9 +45,10 @@ npm run preview
 ## **Features** ##
 ***
 
-## **Update Details** ##
+## **Project Timeline** ##
 | Date | Describe |
 | --- | --- |
 | 2022/11/11 | Initialized Nuxt3.js application as frontend frame |
 |            | Initialized Springboot project as backend environment |
 |            | Initialized README.md |
+| 2022/11/12 | Adding Boyer-Moore Algorithm |
