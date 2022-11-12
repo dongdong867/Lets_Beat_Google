@@ -1,4 +1,4 @@
-# **Let's Bet Google** #
+# **Let's Beat Google** #
 111-1 NCCU MIS Data Structure Project<br>
 作者 Author: 陳宣羽、蔡秀蓁、劉詠熙、陳書雁、吳欣穎
 ***
