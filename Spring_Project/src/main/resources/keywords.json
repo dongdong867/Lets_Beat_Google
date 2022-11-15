@@ -1,0 +1,126 @@
+[
+  {
+    "text": "星座",
+    "weight": 20
+  },
+
+  {
+    "text": "特質",
+    "weight": 20
+  },
+
+  {
+    "text": "人格",
+    "weight": 8
+  },
+
+  {
+    "text": "個性",
+    "weight": 8
+  },
+
+  {
+    "text": "類型",
+    "weight": 8
+  },
+
+  {
+    "text": "性格",
+    "weight": 8
+  },
+
+  {
+    "text": "心理",
+    "weight": 8
+  },
+
+  {
+    "text": "人際關係",
+    "weight": 8
+  },
+
+  {
+    "text": "能力",
+    "weight": 8
+  },
+
+  {
+    "text": "屬性",
+    "weight": 8
+  },
+
+  {
+    "text": "態度",
+    "weight": 8
+  },
+
+  {
+    "text": "優點",
+    "weight": 8
+  },
+
+  {
+    "text": "缺點",
+    "weight": 8
+  },
+
+  {
+    "text": "天秤",
+    "weight": 4
+  },
+
+  {
+    "text": "天蠍",
+    "weight": 4
+  },
+
+  {
+    "text": "水瓶",
+    "weight": 4
+  },
+
+  {
+    "text": "巨蟹",
+    "weight": 4
+  },
+
+  {
+    "text": "牡羊",
+    "weight": 4
+  },
+
+  {
+    "text": "金牛",
+    "weight": 4
+  },
+
+  {
+    "text": "射手",
+    "weight": 4
+  },
+
+  {
+    "text": "處女",
+    "weight": 4
+  },
+
+  {
+    "text": "獅子",
+    "weight": 4
+  },
+
+  {
+    "text": "摩羯",
+    "weight": 4
+  },
+
+  {
+    "text": "雙子",
+    "weight": 4
+  },
+
+  {
+    "text": "雙魚",
+    "weight": 4
+  }
+]
