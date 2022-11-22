@@ -5,6 +5,7 @@ import java.util.HashMap;
 public class BoyerMooreSearch {
 
     public int search(String text, String pattern) {
+
         int matched = 0, textLength = text.length(), patternLength = pattern.length();
 
         if (textLength == 0 || patternLength == 0 || textLength < patternLength) {
@@ -30,7 +31,8 @@ public class BoyerMooreSearch {
         return matched;
     }
 
-    public HashMap<Character, Integer> getBadChar(String pattern) {
+    private HashMap<Character, Integer> getBadChar(String pattern) {
+
         HashMap<Character, Integer> badChar = new HashMap<>();
         int patternLengthMinusOne = pattern.length() - 1;
         for (int i = 0; i < patternLengthMinusOne; i++) {
@@ -39,7 +41,8 @@ public class BoyerMooreSearch {
         return badChar;
     }
 
-    public int hasSuffix(String pattern) {
+    private int hasSuffix(String pattern) {
+
         int patternLength = pattern.length();
         for (int i = 0; i < patternLength - 1; i++) {
             if (pattern.charAt(i) == pattern.charAt(patternLength - 1)) {
@@ -49,7 +52,8 @@ public class BoyerMooreSearch {
         return -1;
     }
 
-    public int[] getGoodSuffix(String pattern) {
+    private int[] getGoodSuffix(String pattern) {
+
         int[] goodSuffix = new int[pattern.length()];
         int suffix = hasSuffix(pattern), patternLength = pattern.length();
         if (suffix == -1) {
