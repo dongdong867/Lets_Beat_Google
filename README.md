@@ -28,6 +28,7 @@ Backend:
 * Spring Boot
 * jsoup
 * Jackson
+* Lombok
 
 ***
 
@@ -66,3 +67,8 @@ npm run preview
 |            | Initialized Springboot project as backend environment |
 |            | Initialized README.md |
 | 2022/11/12 | Adding Boyer-Moore Algorithm |
+| 2022/11/15 | Create keywords.json file |
+|            | Create Keyword, KeywordList, ScoreCalculator, Website classes |
+|            | Import Jackson, Lombok |
+| 2022/11/22 | Import jsoup |
+|            | Create WebsiteReader class |
