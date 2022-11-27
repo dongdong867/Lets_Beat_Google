@@ -12,6 +12,9 @@ public class BoyerMooreSearch {
             return 0;
         }
 
+        text = text.toLowerCase();
+        pattern = pattern.toLowerCase();
+
         HashMap<Character, Integer> badChar = getBadChar(pattern);
         int[] goodSuffix = getGoodSuffix(pattern);
         for (int i = patternLength - 1, j; i < textLength;) {
