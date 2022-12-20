@@ -1,9 +1,12 @@
-package com.example.demo.Model;
+package com.example.demo.service.impl;
 
 import java.util.HashMap;
 
-public class BoyerMooreSearch {
+import com.example.demo.service.BoyerMooreSearchService;
 
+public class BoyerMooreSearchServiceImpl implements BoyerMooreSearchService {
+
+    @Override
     public int search(String text, String pattern) {
 
         int matched = 0, textLength = text.length(), patternLength = pattern.length();

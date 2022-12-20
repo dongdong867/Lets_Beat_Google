@@ -1,20 +1,21 @@
-package com.example.demo.Model;
+package com.example.demo.repository;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import com.example.demo.model.Keyword;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.Getter;
 
-public class KeywordList {
+public class KeywordRepository {
 
     @Getter
     ArrayList<Keyword> keywordList;
 
-    public KeywordList() {
+    public KeywordRepository() {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             File keywordFile = new File("Spring_Project/src/main/resources/keywords.json");

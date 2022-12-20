@@ -1,4 +1,4 @@
-package com.example.demo.Model;
+package com.example.demo.service.impl;
 
 import java.io.IOException;
 import java.net.URLDecoder;
@@ -9,8 +9,12 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class GoogleSearcher {
+import com.example.demo.model.Website;
+import com.example.demo.service.GoogleSearchService;
 
+public class GoogleSearcherImpl implements GoogleSearchService {
+
+    @Override
     public ArrayList<Website> getSearchResult(String query) {
         try {
             String searchURL = "https://www.google.com/search?q=";

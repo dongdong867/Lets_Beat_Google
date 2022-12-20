@@ -1,4 +1,4 @@
-package com.example.demo.Model;
+package com.example.demo.service.impl;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -7,8 +7,12 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class WebsiteReader {
+import com.example.demo.model.Website;
+import com.example.demo.service.WebsiteService;
 
+public class WebsiteServiceImpl implements WebsiteService {
+
+    @Override
     public String getContent(String url) {
         try {
             return Jsoup.connect(url).get().body().text();
@@ -18,6 +22,7 @@ public class WebsiteReader {
         }
     }
 
+    @Override
     public ArrayList<Website> getLinks(String url) {
         try {
             ArrayList<Website> linkList = new ArrayList<>();
