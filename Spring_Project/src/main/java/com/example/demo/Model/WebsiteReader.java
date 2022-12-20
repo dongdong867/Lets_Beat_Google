@@ -14,7 +14,7 @@ public class WebsiteReader {
             return Jsoup.connect(url).get().body().text();
         } catch (IOException e) {
             e.printStackTrace();
-            return null;
+            return "";
         }
     }
 
