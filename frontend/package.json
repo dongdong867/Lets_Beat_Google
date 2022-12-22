@@ -3,6 +3,7 @@
 	"scripts": {
 		"build": "nuxt build",
 		"dev": "nuxt dev",
+		"deploy": "cd .output/server && rm -r node_modules && npm install && firebase deploy",
 		"generate": "nuxt generate",
 		"preview": "nuxt preview",
 		"postinstall": "nuxt prepare"
