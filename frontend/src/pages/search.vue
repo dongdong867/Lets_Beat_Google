@@ -1,7 +1,8 @@
 <template>
 	<div class="sticky top-0">
 		<div class="flex place-items-end mx-[5vw] py-[2vh] gap-x-[2vw]">
-			<img :src="Logo" class="w-[4vw]" />
+			<nuxt-link to="/"><img :src="Logo" class="w-[4vw]" /></nuxt-link>
+
 			<div
 				class="w-[60vw] h-[5vh] text-2xl bg-base-dark flex place-content-between place-items-center rounded-full"
 			>
@@ -31,7 +32,7 @@ import Search from '~/assets/icons/search.svg?url'
 const route = useRoute()
 const q = ref(route.query.q)
 
-const clearInput = () => (input.value = '')
+const clearInput = () => (q.value = '')
 </script>
 
 <style lang="scss" scoped></style>

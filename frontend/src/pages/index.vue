@@ -9,7 +9,7 @@
 		>
 			<input
 				v-model="q"
-				class="w-[55vw] text-3xl bg-transparent pl-[2vw] focus:outline-none"
+				class="w-[55vw] text-[26px] bg-transparent pl-[1vw] focus:outline-none"
 				type="text"
 			/>
 			<img :src="Cross" class="w-[4vh] pr-[1vw] p-[0.5vh] cursor-pointer" @click="clearInput" />
