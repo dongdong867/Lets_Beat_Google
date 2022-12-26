@@ -11,4 +11,11 @@ public interface ScoreService {
    * @param website
    */
   void calculateScore(Website website);
+
+  /**
+   * Calculate the total score with the score of the page and its subpages.
+   * 
+   * @param website
+   */
+  void calculateTotalScore(Website website);
 }
