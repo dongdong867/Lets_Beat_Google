@@ -25,11 +25,11 @@ public class BoyerMooreSearchServiceImpl implements BoyerMooreSearchService {
     for (int i = 0, j; i <= textLength - patternLength;) {
       for (j = patternLength - 1; j >= 0 && text.charAt(i + j) == pattern.charAt(j); j--) {
       }
-      if (j == 0) {
+      if (j < 0) {
         matched++;
         i += goodSuffix[0];
       } else {
-        i += Math.max(goodSuffix[j],
+        i += Math.max(goodSuffix[j + 1],
             badChar.get(text.charAt(i + j)) == null ? goodSuffix[0] : badChar.get(text.charAt(i + j)));
       }
     }
@@ -76,7 +76,6 @@ public class BoyerMooreSearchServiceImpl implements BoyerMooreSearchService {
       if (i == j)
         j = temp[j];
     }
-
     return goodSuffix;
   }
 }
