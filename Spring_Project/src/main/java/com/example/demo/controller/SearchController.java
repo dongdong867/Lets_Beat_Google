@@ -1,8 +1,13 @@
 package com.example.demo.controller;
 
 import java.util.ArrayList;
+import java.util.concurrent.ForkJoinPool;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,32 +18,45 @@ import com.example.demo.service.impl.GoogleSearchServiceImpl;
 import com.example.demo.service.impl.ScoreServiceImpl;
 import com.example.demo.service.impl.WebsiteServiceImpl;
 
+@CrossOrigin
+@Controller
 @RestController
-@RequestMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/search", produces = { MediaType.APPLICATION_JSON_VALUE, "application/json;charset=UTF-8" })
+
 public class SearchController {
 
-  @GetMapping("/{query}")
-  public ArrayList<Website> getSearchResult(@PathVariable("query") String query) {
+  @Autowired
+  private GoogleSearchServiceImpl googleSearchService;
 
-    GoogleSearchServiceImpl googleSearchServiceImpl = new GoogleSearchServiceImpl();
-    ArrayList<Website> websites = googleSearchServiceImpl.getSearchResult(query);
+  @Autowired
+  private WebsiteServiceImpl websiteService;
 
-    WebsiteServiceImpl websiteServiceImpl = new WebsiteServiceImpl();
-    ScoreServiceImpl scoreServiceImpl = new ScoreServiceImpl();
+  @Autowired
+  private ScoreServiceImpl scoreService;
 
-    for (Website website : websites) {
-      website.setContent(websiteServiceImpl.getContent(website.getURL()));
-      scoreServiceImpl.calculateScore(website);
-      ArrayList<Website> subpagesList = websiteServiceImpl.getLinks(website.getURL());
-      for (Website subpage : subpagesList) {
-        System.out.println(subpage.getURL());
-        subpage.setContent(websiteServiceImpl.getContent(subpage.getURL()));
-        scoreServiceImpl.calculateScore(subpage);
+  @GetMapping(value = "/{query}", produces = { MediaType.APPLICATION_JSON_VALUE, "application/json;charset=UTF-8" })
+  public ResponseEntity<ArrayList<Website>> getSearchResult(@PathVariable("query") String query) {
+
+    ArrayList<Website> websites = googleSearchService.getSearchResult(query);
+
+    ForkJoinPool forkJoinPool = new ForkJoinPool();
+    forkJoinPool.submit(() -> websites.parallelStream().forEach(website -> {
+      website.setContent(websiteService.getContent(website.getURL()));
+      scoreService.calculateScore(website);
+      ArrayList<Website> subpages = websiteService.getSubsites(website.getURL());
+      subpages.parallelStream().forEach(subpage -> {
+        subpage.setContent(websiteService.getContent(subpage.getURL()));
+        scoreService.calculateScore(subpage);
         website.addSubpage(subpage);
-      }
-      scoreServiceImpl.calculateTotalScore(website);
-    }
+      });
+      scoreService.calculateTotalScore(website);
+    })).join();
 
-    return websites;
+    websites.sort((a, b) -> {
+      return a.getScore() < b.getScore() ? 1 : -1;
+    });
+
+    return ResponseEntity.ok(websites);
+
   }
 }

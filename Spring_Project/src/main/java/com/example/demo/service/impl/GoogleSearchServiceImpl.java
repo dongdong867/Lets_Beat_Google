@@ -1,48 +1,51 @@
 package com.example.demo.service.impl;
 
 import java.io.IOException;
-import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.example.demo.model.Website;
 import com.example.demo.service.GoogleSearchService;
+import com.example.demo.service.WebsiteService;
 
+@Service
 public class GoogleSearchServiceImpl implements GoogleSearchService {
+
+  @Autowired
+  private WebsiteService websiteService;
 
   @Override
   public ArrayList<Website> getSearchResult(String query) {
+
+    ArrayList<Website> websites = new ArrayList<>();
+    StringBuilder searchURL = new StringBuilder("https://www.google.com/search?q=");
     try {
-      String searchURL = "https://www.google.com/search?q=";
+      searchURL.append(URLEncoder.encode(query + "咖啡", "UTF-8"));
+      searchURL.append("&num=50");
+      System.out.println(searchURL.toString());
+      Elements links = websiteService.getLinks(searchURL.toString());
+      // searchURL.append("&start=20");
+      // links.addAll(websiteService.getLinks(searchURL.toString()));
 
-      Elements links = Jsoup
-          .connect(searchURL + URLEncoder.encode(query + " 咖啡", "UTF-8"))
-          .userAgent("User-agent")
-          .timeout(5000).get()
-          .select("a[href]");
-
-      ArrayList<Website> websiteList = new ArrayList<>();
-      for (Element link : links) {
-        String uri = link.absUrl("href");
-        if (uri.indexOf("q=") == -1 || uri.indexOf("&") == -1) {
-          continue;
-        }
-        uri = URLDecoder.decode(uri.substring(uri.indexOf("=") + 1, uri.indexOf("&")), "UTF-8");
-        if (!uri.startsWith("http") || uri.startsWith("https://support.google.com")
-            || uri.startsWith("https://accounts.google.com") || uri.contains(".jpg") || uri.contains(".png")) {
-          continue;
-        } else {
-          websiteList.add(Website.builder().URL(uri).title(link.text()).build());
-        }
-      }
-      return websiteList;
+      websites.addAll(links.parallelStream()
+          .filter(link -> link.absUrl("href").indexOf("url?q=") != -1)
+          .filter(link -> link.absUrl("href").indexOf("&") != -1)
+          .filter(link -> link.absUrl("href").indexOf("https://support.google.com") == -1)
+          .filter(link -> link.absUrl("href").indexOf("https://accounts.google.com") == -1)
+          .filter(link -> !link.absUrl("href").matches(".*\\.(jpg|png|jpeg)$"))
+          .map(link -> {
+            return Website.builder().URL(link.absUrl("href")).title(link.text()).build();
+          })
+          .collect(Collectors.toList()));
     } catch (IOException e) {
       e.printStackTrace();
     }
-    return null;
+
+    return websites;
   }
 }

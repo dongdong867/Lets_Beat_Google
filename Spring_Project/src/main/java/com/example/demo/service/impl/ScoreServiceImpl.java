@@ -1,24 +1,33 @@
 package com.example.demo.service.impl;
 
+import java.util.ArrayList;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.example.demo.model.Keyword;
 import com.example.demo.model.Website;
 import com.example.demo.repository.KeywordDAO;
 import com.example.demo.service.ScoreService;
 
+@Service
 public class ScoreServiceImpl implements ScoreService {
 
-  private KeywordDAO keywordsDAO = new KeywordDAO();
+  @Autowired
+  private BoyerMooreSearchServiceImpl boyerMooreSearchService;
+
+  @Autowired
+  private KeywordDAO keywordsDAO;
 
   @Override
   public void calculateScore(Website website) {
-
-    BoyerMooreSearchServiceImpl bmSearch = new BoyerMooreSearchServiceImpl();
     for (Keyword keyword : keywordsDAO.getKeywordDB()) {
-      int score = bmSearch.search(website.getContent(), keyword.getText());
+      int score = boyerMooreSearchService.search(website.getContent(), keyword.getText()) * keyword.getWeight();
       website.setScore(website.getScore() + score);
     }
   }
 
+  @Override
   public void calculateTotalScore(Website website) {
     int score = 0;
     for (Website subpage : website.getSubpages()) {

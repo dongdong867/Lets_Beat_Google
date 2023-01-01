@@ -3,14 +3,18 @@ package com.example.demo.service.impl;
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.stereotype.Service;
 
 import com.example.demo.model.Website;
 import com.example.demo.service.WebsiteService;
 
+@Service
 public class WebsiteServiceImpl implements WebsiteService {
 
   @Override
@@ -18,35 +22,39 @@ public class WebsiteServiceImpl implements WebsiteService {
     try {
       return Jsoup.connect(url).get().body().text();
     } catch (IOException e) {
-      e.printStackTrace();
+      System.out.println("Error while retrieving content: " + e.getMessage());
       return "";
     }
   }
 
   @Override
-  public ArrayList<Website> getLinks(String url) {
-    ArrayList<Website> linkList = new ArrayList<>();
+  public ArrayList<Website> getSubsites(String url) {
+
+    Elements links = getLinks(url);
+    String domain;
     try {
-      Elements links = Jsoup
-          .connect(url)
-          .userAgent("Usre-agent")
-          .timeout(5000).get()
-          .select("a[href]");
-      String domain = new URI(url).getHost();
-      for (Element link : links) {
-        String uri = link.absUrl("href");
-        Website subsite = Website.builder().URL(uri).title(link.text()).build();
-        if (uri.startsWith("https://" + domain) && !uri.endsWith(".jpg") && !uri.endsWith(".png")
-            && !linkList.contains(subsite)) {
-          linkList.add(subsite);
-        } else {
-          continue;
-        }
-      }
-      return linkList;
+      domain = new URI(url).getHost();
     } catch (Exception e) {
-      e.printStackTrace();
-      return linkList;
+      System.out.println("Error while getting domain: " + e.getMessage());
+      return new ArrayList<>();
+    }
+    List<Website> subsites = links.parallelStream()
+        .filter(link -> link.absUrl("href").startsWith("https:// " + domain))
+        .filter(link -> !link.absUrl("href").matches(".*\\.(jpg|png|jpeg)$"))
+        .filter(link -> link.absUrl("href").indexOf("https://tw.news.yahoo.com") != -1)
+        .map(link -> Website.builder().URL(link.absUrl("href")).title(link.text()).build())
+        .collect(Collectors.toList());
+
+    return (ArrayList<Website>) subsites;
+  }
+
+  @Override
+  public Elements getLinks(String url) {
+    try {
+      return Jsoup.connect(url).userAgent("User-agent").timeout(5000).get().select("a[href]");
+    } catch (Exception e) {
+      System.out.println("Error while getting links from URL: " + e.getMessage());
+      return new Elements();
     }
   }
 }
