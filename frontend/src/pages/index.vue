@@ -17,10 +17,7 @@
 		<nuxt-link
 			v-if="q.length != 0"
 			class="w-max h-max px-[1.5vw] py-[1vh] text-lg bg-neutral-700 rounded-full"
-			:to="{
-				path: '/search',
-				query: { q }
-			}"
+			:to="{ path: '/search?q=', query: { q } }"
 		>
 			<div class="flex place-content-around place-items-center text-2xl gap-x-[1vw]">
 				<img :src="Search" class="w-[2vw]" />
