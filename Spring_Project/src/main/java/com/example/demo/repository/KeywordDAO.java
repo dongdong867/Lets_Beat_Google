@@ -3,9 +3,6 @@ package com.example.demo.repository;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-
-import javax.annotation.PostConstruct;
-
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.model.Keyword;
@@ -27,7 +24,7 @@ public class KeywordDAO {
       this.keywordDB = objectMapper.readValue(keywordFile, new TypeReference<ArrayList<Keyword>>() {
       });
     } catch (IOException e) {
-      e.printStackTrace();
+      System.out.println("KeywordDAO error at: " + e.getMessage());
     }
   }
 }
