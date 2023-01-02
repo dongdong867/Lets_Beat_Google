@@ -29,8 +29,6 @@ public class GoogleSearchServiceImpl implements GoogleSearchService {
       searchURL.append("&num=50");
       System.out.println(searchURL.toString());
       Elements links = websiteService.getLinks(searchURL.toString());
-      // searchURL.append("&start=20");
-      // links.addAll(websiteService.getLinks(searchURL.toString()));
 
       websites.addAll(links.parallelStream()
           .filter(link -> link.absUrl("href").indexOf("url?q=") != -1)
@@ -39,11 +37,11 @@ public class GoogleSearchServiceImpl implements GoogleSearchService {
           .filter(link -> link.absUrl("href").indexOf("https://accounts.google.com") == -1)
           .filter(link -> !link.absUrl("href").matches(".*\\.(jpg|png|jpeg)$"))
           .map(link -> {
-            return Website.builder().URL(link.absUrl("href")).title(link.text()).build();
+            return Website.builder().URL(link.absUrl("href")).title(link.select("h3").text()).build();
           })
           .collect(Collectors.toList()));
     } catch (IOException e) {
-      e.printStackTrace();
+      System.out.println("Error occurs at getting search result: " + e.getMessage());
     }
 
     return websites;
