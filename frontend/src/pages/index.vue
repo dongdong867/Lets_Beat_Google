@@ -11,16 +11,17 @@
 				v-model="q"
 				class="w-[55vw] text-[26px] bg-transparent pl-[1vw] focus:outline-none"
 				type="text"
+				@keydown.enter="enterClicked"
 			/>
 			<img :src="Cross" class="w-[4vh] pr-[1vw] p-[0.5vh] cursor-pointer" @click="clearInput" />
 		</div>
 		<nuxt-link
 			v-if="q.length != 0"
 			class="w-max h-max px-[1.5vw] py-[1vh] text-lg bg-neutral-700 rounded-full"
-			:to="{ path: '/search?q=', query: { q } }"
+			:to=" "
 		>
 			<div class="flex place-content-around place-items-center text-2xl gap-x-[1vw]">
-				<img :src="Search" class="w-[2vw]" />
+				<img :src="Bean" class="w-[2vw]" />
 				<div>Search</div>
 			</div>
 		</nuxt-link>
@@ -30,7 +31,7 @@
 			to="/"
 		>
 			<div class="flex place-content-around place-items-center text-2xl gap-x-[1vw]">
-				<img :src="Search" class="w-[2vw]" />
+				<img :src="Bean" class="w-[2vw]" />
 				<div>Search</div>
 			</div>
 		</nuxt-link>
@@ -40,10 +41,16 @@
 <script setup>
 import Logo from '~/assets/icons/logo.svg?url'
 import Cross from '~/assets/icons/cross.svg?url'
-import Search from '~/assets/icons/search.svg?url'
+import Bean from '~/assets/icons/bean.svg?url'
 
 const q = ref('')
 const clearInput = () => (q.value = '')
+
+const enterClicked = () => {
+	if (q.value.length !== 0) {
+		useRouter().push('/search?q=' + q.value)
+	}
+}
 </script>
 
 <style lang="scss" scoped></style>
