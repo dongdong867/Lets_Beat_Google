@@ -31,6 +31,6 @@ public class ScoreServiceImpl implements ScoreService {
     for (Website subpage : website.getSubpages()) {
       score += subpage.getScore();
     }
-    website.setScore(website.getScore() + (int) (score * 0.5));
+    website.setScore(website.getScore() + (int) (score * 0.3));
   }
 }
