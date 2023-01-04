@@ -43,19 +43,32 @@ public class SearchController {
     forkJoinPool.submit(() -> websites.parallelStream().forEach(website -> {
       website.setContent(websiteService.getContent(website.getURL()));
       scoreService.calculateScore(website);
-      ArrayList<Website> subpages = websiteService.getSubsites(website.getURL());
-      subpages.parallelStream().forEach(subpage -> {
-        subpage.setContent(websiteService.getContent(subpage.getURL()));
-        scoreService.calculateScore(subpage);
-        website.addSubpage(subpage);
-      });
+      website.setSubpages(websiteService.getSubsites(website.getURL()));
+      // subpages.parallelStream().forEach(subpage -> {
+      // subpage.setContent(websiteService.getContent(subpage.getURL()));
+      // scoreService.calculateScore(subpage);
+      // website.addSubpage(subpage);
+      // });
+      for (int i = 0; i < 5; i++) {
+        try {
+          int random = (int) Math.floor(Math.random() * website.getSubpages().size());
+          Website subsite = website.getSubpages().get(random);
+          subsite.setContent(websiteService.getContent(subsite.getURL()));
+          scoreService.calculateScore(subsite);
+          website.addSubpage(subsite);
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+      }
       scoreService.calculateTotalScore(website);
+
     })).join();
 
     websites.sort((a, b) -> {
       return a.getScore() < b.getScore() ? 1 : -1;
     });
 
+    System.out.println("process finish");
     return ResponseEntity.ok(websites);
 
   }
