@@ -19,41 +19,46 @@ public class WebsiteServiceImpl implements WebsiteService {
   @Override
   public String getContent(String url) {
     try {
-      return Jsoup.connect(url).get().body().text();
+      if (url.indexOf("{") == -1 && url.indexOf("}") == -1) {
+        return Jsoup.connect(url).get().body().text();
+      }
     } catch (IOException e) {
       System.out.println("Error while retrieving content: " + e.getMessage());
-      return "";
     }
+    return "";
   }
 
   @Override
   public ArrayList<Website> getSubsites(String url) {
-
-    Elements links = getLinks(url);
-    String domain;
     try {
-      domain = new URI(url).getHost();
+      String domain = new URI(url).getHost();
+      Elements links = getLinks(url);
+      List<Website> subsites = links.parallelStream()
+          .filter(link -> link.absUrl("href").startsWith("https://" + domain))
+          .filter(link -> !link.absUrl("href").matches(".*\\.(jpg|png|jpeg)$"))
+          // .filter(link -> link.absUrl("href").indexOf("https://tw.news.yahoo.com") !=
+          // -1)
+          .map(link -> Website.builder().URL(link.absUrl("href")).title(link.text()).build())
+          .collect(Collectors.toList());
+
+      System.out.println("subsites: " + subsites);
+      return (ArrayList<Website>) subsites;
     } catch (Exception e) {
-      System.out.println("Error while getting domain: " + e.getMessage());
+      System.out.println("Error when getting domain: " + e.getMessage());
       return new ArrayList<>();
     }
-    List<Website> subsites = links.parallelStream()
-        .filter(link -> link.absUrl("href").startsWith("https:// " + domain))
-        .filter(link -> !link.absUrl("href").matches(".*\\.(jpg|png|jpeg)$"))
-        .filter(link -> link.absUrl("href").indexOf("https://tw.news.yahoo.com") != -1)
-        .map(link -> Website.builder().URL(link.absUrl("href")).title(link.text()).build())
-        .collect(Collectors.toList());
 
-    return (ArrayList<Website>) subsites;
   }
 
   @Override
   public Elements getLinks(String url) {
     try {
-      return Jsoup.connect(url).userAgent("User-agent").timeout(5000).get().select("a[href]");
+      if (url.indexOf("https://apps.apple.com") == -1) {
+        return Jsoup.connect(url).userAgent("User-agent").timeout(5000).get().select("a[href]");
+      }
     } catch (Exception e) {
       System.out.println("Error while getting links from URL: " + e.getMessage());
-      return new Elements();
     }
+    return null;
   }
 }
