@@ -44,11 +44,7 @@ public class SearchController {
       website.setContent(websiteService.getContent(website.getURL()));
       scoreService.calculateScore(website);
       website.setSubpages(websiteService.getSubsites(website.getURL()));
-      // subpages.parallelStream().forEach(subpage -> {
-      // subpage.setContent(websiteService.getContent(subpage.getURL()));
-      // scoreService.calculateScore(subpage);
-      // website.addSubpage(subpage);
-      // });
+
       for (int i = 0; i < 5; i++) {
         try {
           int random = (int) Math.floor(Math.random() * website.getSubpages().size());
@@ -71,5 +67,13 @@ public class SearchController {
     System.out.println("process finish");
     return ResponseEntity.ok(websites);
 
+  }
+
+  @GetMapping(value = "/relative/{query}", produces = { MediaType.APPLICATION_JSON_VALUE,
+      "application/json;charset=UTF-8" })
+  public ArrayList<String> getRelativeKeywords(@PathVariable("query") String query) {
+
+    ArrayList<String> relativeKeywords = googleSearchService.getRelativeSearch(query);
+    return relativeKeywords;
   }
 }
