@@ -1,37 +1,50 @@
 <template>
-	<div class="w-screen h-screen flex flex-col place-content-center place-items-center gap-y-[5vh]">
-		<div class="flex place-items-end gap-x-3 select-none cursor-default">
-			<img :src="Logo" class="w-[10vw]" />
-			<div class="text-6xl font-bold">Let's Beat Google</div>
+	<div v-if="loading == true">
+		<Coffee />
+	</div>
+	<div
+		class="w-screen h-screen flex flex-col place-content-center place-items-center gap-y-[3vh]"
+		v-else
+	>
+		<div class="flex place-content-center place-items-end gap-x-4 select-none cursor-default">
+			<img :src="Logo" class="h-[10vh]" />
+			<div class="max-[450px]:text-3xl max-[450px]:w-[40%] sm:text-6xl font-bold">
+				Let's Beat <span class="max-[450px]:text-[41px]">Google</span>
+			</div>
 		</div>
 		<div
-			class="w-[60vw] h-[5vh] bg-neutral-800 rounded-full flex place-content-around border-[2px] border-neutral-700"
+			class="w-[80vw] h-[6vh] bg-neutral-800 flex place-content-between place-items-center rounded-full border-[2px] pr-[1vw] border-neutral-700"
 		>
 			<input
 				v-model="q"
-				class="w-[55vw] text-[26px] bg-transparent pl-[1vw] focus:outline-none"
+				class="w-full text-[26px] bg-transparent pl-[5%] text-2xl focus:outline-none"
 				type="text"
 				@keydown.enter="enterClicked"
 			/>
-			<img :src="Cross" class="w-[4vh] pr-[1vw] p-[0.5vh] cursor-pointer" @click="clearInput" />
+			<img :src="Cross" class="h-[3vh] px-3 cursor-pointer" @click="clearInput" />
 		</div>
 		<nuxt-link
 			v-if="q.length != 0"
-			class="w-max h-max px-[1.5vw] py-[1vh] text-lg bg-neutral-700 rounded-full"
-			:to=" "
+			class="w-max h-max max-[450px]:px-[2vw] sm:px-[0.5vw] py-[1vh] text-lg bg-neutral-700 rounded-full"
+			:to="{ path: '/search?q=', query: { q } }"
+			@click="loading = true"
 		>
-			<div class="flex place-content-around place-items-center text-2xl gap-x-[1vw]">
-				<img :src="Bean" class="w-[2vw]" />
+			<div
+				class="flex place-content-around place-items-center text-2xl max-[450px]:gap-x-[3vw] sm:gap-x-[2vw] px-[2vw]"
+			>
+				<img :src="Bean" class="h-[3vh]" />
 				<div>Search</div>
 			</div>
 		</nuxt-link>
 		<nuxt-link
 			v-else
-			class="w-max h-max px-[1.5vw] py-[1vh] text-lg bg-neutral-700 rounded-full"
+			class="w-max h-max max-[450px]:px-[2vw] sm:px-[0.5vw] py-[1vh] text-lg bg-neutral-700 rounded-full"
 			to="/"
 		>
-			<div class="flex place-content-around place-items-center text-2xl gap-x-[1vw]">
-				<img :src="Bean" class="w-[2vw]" />
+			<div
+				class="flex place-content-around place-items-center text-2xl max-[450px]:gap-x-[3vw] sm:gap-x-[2vw] px-[2vw]"
+			>
+				<img :src="Bean" class="h-[3vh]" />
 				<div>Search</div>
 			</div>
 		</nuxt-link>
@@ -45,9 +58,11 @@ import Bean from '~/assets/icons/bean.svg?url'
 
 const q = ref('')
 const clearInput = () => (q.value = '')
+const loading = ref(false)
 
 const enterClicked = () => {
 	if (q.value.length !== 0) {
+		loading.value = true
 		useRouter().push('/search?q=' + q.value)
 	}
 }

@@ -1,6 +1,6 @@
 <template>
 	<div class="h-screen flex flex-col place-content-center place-items-center">
-		<img :src="bean" class="w-[20vw] animate-[bean-animation_1.5s_linear_infinite] m-[10vh]" />
+		<img :src="bean" class="w-[30vw] animate-[bean-animation_1.5s_linear_infinite] m-[10vh]" />
 		<div class="text-5xl font-bold">LOADING...</div>
 	</div>
 </template>
