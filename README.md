@@ -38,7 +38,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-![product_screenshot]
+<img src="frontend/src/assets/images/phone-view.png" width="200" />
 
 A project that optimize the search result based on Google search engine, which displays results related to coffee.
 
@@ -97,4 +97,3 @@ npm run dev
 [spring-url]:https://spring.io
 [figma]:https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white
 [figma-url]:https://www.figma.com/
-[product_screenshot]: frontend/src/assets/images/phone-view.png
