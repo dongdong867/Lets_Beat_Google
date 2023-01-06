@@ -1,0 +1,86 @@
+[
+	{
+		"text": "咖啡",
+		"weight": 10
+	},
+
+	{
+		"text": "產地",
+		"weight": 5
+	},
+
+	{
+		"text": "口感",
+		"weight": 5
+	},
+
+	{
+		"text": "處理",
+		"weight": 5
+	},
+
+	{
+		"text": "香味",
+		"weight": 5
+	},
+
+	{
+		"text": "風味",
+		"weight": 5
+	},
+
+	{
+		"text": "色澤",
+		"weight": 3
+	},
+
+	{
+		"text": "莊園",
+		"weight": 3
+	},
+
+	{
+		"text": "小農",
+		"weight": 3
+	},
+
+	{
+		"text": "日曬",
+		"weight": 3
+	},
+
+	{
+		"text": "水洗",
+		"weight": 3
+	},
+
+	{
+		"text": "層次",
+		"weight": 3
+	},
+
+	{
+		"text": "濾掛",
+		"weight": 3
+	},
+
+	{
+		"text": "即溶",
+		"weight": 3
+	},
+
+	{
+		"text": "咖啡廳",
+		"weight": 1
+	},
+
+	{
+		"text": "咖啡豆",
+		"weight": 1
+	},
+
+	{
+		"text": "咖啡店",
+		"weight": 1
+	}
+]
