@@ -8,7 +8,7 @@
 	>
 		<div class="flex place-content-center place-items-end gap-x-4 select-none cursor-default">
 			<img :src="Logo" class="h-[10vh]" />
-			<div class="max-[450px]:text-3xl max-[450px]:w-[40%] sm:text-6xl font-bold">
+			<div class="max-[450px]:text-3xl max-[450px]:w-[40%] sm:w-[100%] sm:text-6xl font-bold">
 				Let's Beat <span class="max-[450px]:text-[41px]">Google</span>
 			</div>
 		</div>

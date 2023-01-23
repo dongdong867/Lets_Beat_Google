@@ -10,15 +10,15 @@
 						<nuxt-link to="/"><img :src="Logo" class="h-[8vh]" /></nuxt-link>
 
 						<div
-							class="w-[75vw] sm:text-lg md:text-xl bg-base-dark flex place-content-between place-items-center rounded-full"
+							class="w-[75vw] sm:text-xl md:text-2xl bg-base-dark flex place-content-between place-items-center rounded-full"
 						>
 							<input
 								v-model="q"
-								class="w-[73%] max-[450px]:pl-[5%] max-[500px]:py-[4%] sm:pl-[3%] sm:py-[1.5%] bg-transparent"
+								class="w-[73%] max-[450px]:pl-[5%] max-[500px]:py-[4%] sm:pl-[3%] sm:py-[1%] bg-transparent"
 								type="text"
 								@keydown.enter="gotoRoute"
 							/>
-							<div class="flex space-x-[2vw] place-items-center mr-[1vw]">
+							<div class="flex space-x-[1vw] place-items-center mr-[1vw]">
 								<img :src="Cross" class="h-[2vh] mr-[0.3vw] cursor-pointer" @click="clearInput" />
 								<div class="w-[0.1vh] h-[3vh] bg-[#a3a3a3]"></div>
 								<a v-if="q.length != 0" :href="gotoRoute">
