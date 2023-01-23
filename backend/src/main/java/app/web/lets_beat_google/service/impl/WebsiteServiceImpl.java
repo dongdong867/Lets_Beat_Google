@@ -36,8 +36,6 @@ public class WebsiteServiceImpl implements WebsiteService {
       List<Website> subsites = links.parallelStream()
           .filter(link -> link.absUrl("href").startsWith("https://" + domain))
           .filter(link -> !link.absUrl("href").matches(".*\\.(jpg|png|jpeg)$"))
-          // .filter(link -> link.absUrl("href").indexOf("https://tw.news.yahoo.com") !=
-          // -1)
           .map(link -> Website.builder().URL(link.absUrl("href")).title(link.text()).build())
           .collect(Collectors.toList());
 
